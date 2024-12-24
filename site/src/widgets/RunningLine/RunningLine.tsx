@@ -1,5 +1,5 @@
 interface RunningLineProps {
-    items: string[];
+    items: readonly string[];
     reverse?: boolean;
 }
 
