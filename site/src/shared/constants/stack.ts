@@ -1,0 +1,1 @@
+export const TECH_STACK = ['React', 'TypeScript', 'ExpressJS', 'Tailwind CSS', 'Node.js', 'REST API', 'PostgreSQL', 'Docker'] as const ;
