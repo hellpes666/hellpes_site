@@ -2,48 +2,123 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const ContactForm = () => (
-  <motion.form
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 20 }}
-    className="flex flex-col gap-4 w-full"
-  >
-    <motion.input
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.1 }}
-      type="text"
-      placeholder="Your Name"
-      className="bg-monokai-bg/30 border border-monokai-purple/20 rounded-lg px-4 py-2 focus:outline-none focus:border-monokai-purple"
-    />
-    <motion.input
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.2 }}
-      type="email"
-      placeholder="Your Email"
-      className="bg-monokai-bg/30 border border-monokai-purple/20 rounded-lg px-4 py-2 focus:outline-none focus:border-monokai-purple"
-    />
-    <motion.textarea
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.3 }}
-      placeholder="Your Message"
-      rows={4}
-      className="bg-monokai-bg/30 border border-monokai-purple/20 rounded-lg px-4 py-2 focus:outline-none focus:border-monokai-purple resize-none"
-    />
-    <motion.button
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4 }}
-      type="submit"
-      className="bg-monokai-purple text-monokai-fg px-6 py-2 rounded-lg hover:bg-monokai-pink transition-colors duration-300"
+const ContactForm = () => {
+  const [status, setStatus] = useState<
+    'idle' | 'loading' | 'success' | 'error'
+  >('idle');
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('loading');
+    setError(null);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('/api/sendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          message: formData.get('message'),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      setStatus('success');
+      form.reset();
+      setTimeout(() => setStatus('idle'), 3000); // Сбросить статус через 3 секунды
+    } catch (error) {
+      console.error('Error:', error);
+      setStatus('error');
+      setError(
+        error instanceof Error ? error.message : 'Failed to send message'
+      );
+    }
+  };
+
+  return (
+    <motion.form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-4 w-full"
     >
-      Send Message
-    </motion.button>
-  </motion.form>
-);
+      <motion.input
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.1 }}
+        type="text"
+        name="name"
+        placeholder="Your Name"
+        required
+        className="bg-monokai-bg/30 border border-monokai-purple/20 rounded-lg px-4 py-2 focus:outline-none focus:border-monokai-purple"
+        disabled={status === 'loading'}
+      />
+      <motion.input
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.2 }}
+        type="email"
+        name="email"
+        placeholder="Your Email"
+        required
+        className="bg-monokai-bg/30 border border-monokai-purple/20 rounded-lg px-4 py-2 focus:outline-none focus:border-monokai-purple"
+        disabled={status === 'loading'}
+      />
+      <motion.textarea
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.3 }}
+        name="message"
+        placeholder="Your Message"
+        rows={4}
+        required
+        className="bg-monokai-bg/30 border border-monokai-purple/20 rounded-lg px-4 py-2 focus:outline-none focus:border-monokai-purple resize-none"
+        disabled={status === 'loading'}
+      />
+      <motion.button
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        type="submit"
+        className="bg-monokai-purple text-monokai-fg px-6 py-2 rounded-lg hover:bg-monokai-pink transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={status === 'loading'}
+      >
+        {status === 'loading' ? 'Sending...' : 'Send Message'}
+      </motion.button>
+
+      <AnimatePresence>
+        {status === 'success' && (
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="text-green-400 text-center"
+          >
+            Message sent successfully!
+          </motion.p>
+        )}
+        {status === 'error' && (
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="text-red-400 text-center"
+          >
+            {error || 'Failed to send message'}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </motion.form>
+  );
+};
 
 const AboutSection = () => {
   const [isOpen, setIsOpen] = useState(false);
