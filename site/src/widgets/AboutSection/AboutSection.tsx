@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+//TODO Разобраться с отправкой писем и SMTP
+
 const ContactForm = () => {
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
