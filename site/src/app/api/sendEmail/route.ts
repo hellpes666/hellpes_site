@@ -1,30 +1,30 @@
-import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 export async function POST(request: Request) {
   // Добавим логирование для отладки
-  console.log('Checking environment variables:', {
-    user: process.env.GMAIL_USER ? 'exists' : 'missing',
-    pass: process.env.GMAIL_PASSWORD ? 'exists' : 'missing'
+  console.log("Checking environment variables:", {
+    user: process.env.GMAIL_USER ? "exists" : "missing",
+    pass: process.env.GMAIL_PASSWORD ? "exists" : "missing",
   });
 
   const transporter = nodemailer.createTransport({
-    service: 'gmail',  // Используем предустановленный сервис вместо ручной настройки
+    service: "gmail", // Используем предустановленный сервис вместо ручной настройки
     auth: {
       user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_PASSWORD
-    }
+      pass: process.env.GMAIL_PASSWORD,
+    },
   });
 
   try {
     const { name, email, message } = await request.json();
-    
+
     // Логируем данные запроса
-    console.log('Received form data:', { name, email, message });
+    console.log("Received form data:", { name, email, message });
 
     // Проверяем соединение
     await transporter.verify();
-    console.log('SMTP connection verified');
+    console.log("SMTP connection verified");
 
     const mailOptions = {
       from: process.env.GMAIL_USER,
@@ -39,26 +39,25 @@ export async function POST(request: Request) {
           <p><strong>Message:</strong></p>
           <p>${message}</p>
         </div>
-      `
+      `,
     };
 
     // Отправляем письмо и ждем результата
     const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info.messageId);
+    console.log("Email sent:", info.messageId);
 
     return NextResponse.json(
       { success: true, messageId: info.messageId },
       { status: 200 }
     );
-
   } catch (error) {
     // Подробное логирование ошибки
-    console.error('Email sending failed:', error);
-    
+    console.error("Email sending failed:", error);
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error'
+      {
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );

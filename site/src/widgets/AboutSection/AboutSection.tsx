@@ -1,57 +1,54 @@
-'use client';
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+"use client";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 //TODO Разобраться с отправкой писем и SMTP йоу
 
 const ContactForm = () => {
   const [status, setStatus] = useState<
-    'idle' | 'loading' | 'success' | 'error'
-  >('idle');
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus('loading');
+    setStatus("loading");
     setError(null);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
 
     try {
-      const response = await fetch('/api/sendEmail', {
-        method: 'POST',
+      const response = await fetch("/api/sendEmail", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: formData.get('name'),
-          email: formData.get('email'),
-          message: formData.get('message'),
+          name: formData.get("name"),
+          email: formData.get("email"),
+          message: formData.get("message"),
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to send message');
+        throw new Error("Failed to send message");
       }
 
-      setStatus('success');
+      setStatus("success");
       form.reset();
-      setTimeout(() => setStatus('idle'), 3000); // Сбросить статус через 3 секунды
+      setTimeout(() => setStatus("idle"), 3000); // Сбросить статус через 3 секунды
     } catch (error) {
-      console.error('Error:', error);
-      setStatus('error');
+      console.error("Error:", error);
+      setStatus("error");
       setError(
-        error instanceof Error ? error.message : 'Failed to send message'
+        error instanceof Error ? error.message : "Failed to send message"
       );
     }
   };
 
   return (
-    <motion.form
-      onSubmit={handleSubmit}
-      className="flex flex-col gap-4 w-full"
-    >
+    <motion.form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
       <motion.input
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -61,7 +58,7 @@ const ContactForm = () => {
         placeholder="Your Name"
         required
         className="bg-monokai-bg/30 border border-monokai-purple/20 rounded-lg px-4 py-2 focus:outline-none focus:border-monokai-purple"
-        disabled={status === 'loading'}
+        disabled={status === "loading"}
       />
       <motion.input
         initial={{ opacity: 0, x: -20 }}
@@ -72,7 +69,7 @@ const ContactForm = () => {
         placeholder="Your Email"
         required
         className="bg-monokai-bg/30 border border-monokai-purple/20 rounded-lg px-4 py-2 focus:outline-none focus:border-monokai-purple"
-        disabled={status === 'loading'}
+        disabled={status === "loading"}
       />
       <motion.textarea
         initial={{ opacity: 0, x: -20 }}
@@ -83,7 +80,7 @@ const ContactForm = () => {
         rows={4}
         required
         className="bg-monokai-bg/30 border border-monokai-purple/20 rounded-lg px-4 py-2 focus:outline-none focus:border-monokai-purple resize-none"
-        disabled={status === 'loading'}
+        disabled={status === "loading"}
       />
       <motion.button
         initial={{ opacity: 0, y: 20 }}
@@ -91,13 +88,13 @@ const ContactForm = () => {
         transition={{ delay: 0.4 }}
         type="submit"
         className="bg-monokai-purple text-monokai-fg px-6 py-2 rounded-lg hover:bg-monokai-pink transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-        disabled={status === 'loading'}
+        disabled={status === "loading"}
       >
-        {status === 'loading' ? 'Sending...' : 'Send Message'}
+        {status === "loading" ? "Sending..." : "Send Message"}
       </motion.button>
 
       <AnimatePresence>
-        {status === 'success' && (
+        {status === "success" && (
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -107,14 +104,14 @@ const ContactForm = () => {
             Message sent successfully!
           </motion.p>
         )}
-        {status === 'error' && (
+        {status === "error" && (
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             className="text-red-400 text-center"
           >
-            {error || 'Failed to send message'}
+            {error || "Failed to send message"}
           </motion.p>
         )}
       </AnimatePresence>
@@ -128,10 +125,10 @@ const AboutSection = () => {
   return (
     <>
       <div className="w-1/3 flex flex-col gap-6 p-8 bg-monokai-bg/50 backdrop-blur-sm rounded-2xl">
-        <h3 className="text-2xl font-bold bg-gradient-to-r from-monokai-fg to-monokai-purple bg-clip-text text-transparent">
+        <h3 className=" select-none text-2xl font-bold bg-gradient-to-r from-monokai-fg to-monokai-purple bg-clip-text text-transparent">
           About Me
         </h3>
-        <p className="text-monokai-comment leading-relaxed">
+        <p className="text-monokai-comment leading-relaxed select-none">
           Passionate frontend developer with 3 years of experience in creating
           modern web applications. Specialized in React ecosystem and TypeScript
           development.
@@ -160,7 +157,7 @@ const AboutSection = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
-                onClick={(e) => e.stopPropagation()}
+                onClick={e => e.stopPropagation()}
                 className="w-full max-w-md mx-auto p-8 bg-monokai-bg rounded-2xl shadow-xl"
               >
                 <div className="flex justify-between items-center mb-6">
