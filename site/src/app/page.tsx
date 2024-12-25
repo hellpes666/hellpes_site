@@ -1,24 +1,34 @@
 import { memo } from 'react';
 import Image from 'next/image';
 import { NAVIGATION_ITEMS, SOCIAL_LINKS } from '@/shared/constants/routes';
-import { TECH_STACK } from '@/shared/constants/stack';
+import { OTHER_STACK, TECH_STACK } from '@/shared/constants/stack';
 import CodeBlock from '@/widgets/CodeBlock/CodeBlock';
 import AboutSection from '@/widgets/AboutSection/AboutSection';
 import RunningLine from '@/widgets/RunningLine/RunningLine';
 
 // Константы для часто используемых стилей
 const COMMON_STYLES = {
-  card: "rounded-2xl bg-slate-800 p-4 w-fit animate-fade-in",
-  socialLink: "bg-slate-800 rounded-full w-10 h-10 hover:bg-slate-700 hover:scale-110 transition-all duration-300 flex items-center justify-center",
-  navLink: "text-[#A5C5E9] transition-all duration-300 hover:scale-110"
+  card: 'rounded-2xl bg-slate-800 p-4 w-fit animate-fade-in',
+  socialLink:
+    'bg-slate-800 rounded-full w-10 h-10 hover:bg-slate-700 hover:scale-110 transition-all duration-300 flex items-center justify-center',
+  navLink: 'text-[#A5C5E9] transition-all duration-300 hover:scale-110',
 };
+
+const ContactForm = memo(() => (
+  <div className="w-1/3 flex flex-col gap-6 p-8 bg-monokai-bg/50 backdrop-blur-sm rounded-2xl">
+    <h3 className="text-2xl font-bold bg-gradient-to-r from-monokai-fg to-monokai-purple bg-clip-text text-transparent">
+      Contact Me
+    </h3>
+  </div>
+));
+ContactForm.displayName = 'ContactForm';
 
 const NavigationLinks = memo(() => (
   <div className="flex items-center gap-6">
     {NAVIGATION_ITEMS.map((item) => (
-      <a 
+      <a
         key={item}
-        href={`#${item.toLowerCase()}`} 
+        href={`#${item.toLowerCase()}`}
         className={COMMON_STYLES.navLink}
       >
         {item}
@@ -31,7 +41,7 @@ NavigationLinks.displayName = 'NavigationLinks';
 const SocialLinks = memo(() => (
   <div className="flex items-center gap-2">
     {SOCIAL_LINKS.map(({ href, title, img }) => (
-      <a 
+      <a
         key={title}
         href={href}
         aria-label={title}
@@ -39,7 +49,12 @@ const SocialLinks = memo(() => (
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Image src={img} alt={title} width={20} height={20} />
+        <Image
+          src={img}
+          alt={title}
+          width={20}
+          height={20}
+        />
       </a>
     ))}
   </div>
@@ -62,13 +77,13 @@ Header.displayName = 'Header';
 const HeroSection = memo(() => (
   <div className="flex flex-col md:flex-row justify-between items-stretch gap-8 px-4 md:px-0">
     <div className={`${COMMON_STYLES.card} self-start`}>
-      <h2 className="text-2xl font-bold">What&apos;s up?</h2>
+      <h2 className="text-2xl md:text-4xl font-bold">What&apos;s up?</h2>
     </div>
     <div className={`${COMMON_STYLES.card} self-center`}>
       <h2 className="text-2xl md:text-4xl font-bold">I&apos;m Alex</h2>
     </div>
     <div className={`${COMMON_STYLES.card} self-end`}>
-      <h2 className="text-2xl md:text-4xl font-bold">Frontend Developer.</h2>
+      <h2 className="text-2xl md:text-4xl font-bold">Frontend</h2>
     </div>
   </div>
 ));
@@ -76,8 +91,11 @@ HeroSection.displayName = 'HeroSection';
 
 const TechStack = memo(() => (
   <div className="relative flex flex-col gap-4 overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
-    <RunningLine items={TECH_STACK } />
-    <RunningLine items={TECH_STACK} reverse />
+    <RunningLine items={TECH_STACK} />
+    <RunningLine
+      items={OTHER_STACK}
+      reverse
+    />
   </div>
 ));
 TechStack.displayName = 'TechStack';

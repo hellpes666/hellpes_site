@@ -3,5 +3,34 @@
 @tailwind utilities;
 
 html > * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+  /* Важно: добавляем will-change для оптимизации производительности */
+  will-change: transform;
+}
+
+.animate-scroll-reverse {
+  animation: scroll-reverse 20s linear infinite;
+  will-change: transform;
 }
