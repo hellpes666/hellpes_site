@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-//TODO Разобраться с отправкой писем и SMTP
+//TODO Разобраться с отправкой писем и SMTP йоу
 
 const ContactForm = () => {
   const [status, setStatus] = useState<
