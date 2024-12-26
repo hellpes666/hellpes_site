@@ -7,7 +7,7 @@ export const ProjectsShowcase = memo(() => (
     <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="mt-10 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8 rounded-2xl bg-slate-800/30 backdrop-blur-sm"
+        className="my-24 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8 rounded-2xl bg-slate-800/30 backdrop-blur-sm"
     >
         <h3 className="col-span-full text-2xl font-bold bg-gradient-to-r from-monokai-fg to-monokai-purple bg-clip-text text-transparent mb-4">
             Немножко проектов

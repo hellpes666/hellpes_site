@@ -222,3 +222,65 @@ html > * {
     display: none;
   }
 }
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #333 #1a1a1a;
+}
+
+/* MS Edge и IE */
+*::-ms-scrollbar {
+  width: 10px;
+}
+
+*::-ms-scrollbar-track {
+  background: #1a1a1a;
+}
+
+*::-ms-scrollbar-thumb {
+  background: #333;
+  border-radius: 5px;
+}
+
+/* Общая поддержка */
+@supports (scrollbar-color: #333 #1a1a1a) {
+  * {
+    scrollbar-color: #333 #1a1a1a;
+    scrollbar-width: thin;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Для Safari и мобильных устройств */
+@media screen and (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Существующие стили скроллбара */
+::-webkit-scrollbar {
+  width: 10px;
+}

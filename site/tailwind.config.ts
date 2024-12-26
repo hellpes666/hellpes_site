@@ -23,6 +23,7 @@ export default {
         scroll: "scroll 20s linear infinite",
         "scroll-reverse": "scroll-reverse 20s linear infinite",
         "type-line": "type-line 0.5s ease-out forwards",
+        "fade-in": "fadeIn 1s ease-in forwards",
       },
       keyframes: {
         shimmer: {
@@ -46,6 +47,10 @@ export default {
         blink: {
           "0%, 100%": { borderColor: "#d796f2" },
           "50%": { borderColor: "transparent" },
+        },
+        fadeIn: {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
         },
       },
     },

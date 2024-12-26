@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 //TODO Разобраться с отправкой писем и SMTP йоу
@@ -48,7 +48,7 @@ const ContactForm = () => {
   };
 
   return (
-    <motion.form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
+    <motion.form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full ">
       <motion.input
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -122,6 +122,18 @@ const ContactForm = () => {
 const AboutSection = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   return (
     <>
       <div className="w-1/3 flex flex-col gap-6 p-8 bg-monokai-bg/50 backdrop-blur-sm rounded-2xl">
@@ -151,14 +163,14 @@ const AboutSection = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center "
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 onClick={e => e.stopPropagation()}
-                className="w-full max-w-md mx-auto p-8 bg-monokai-bg rounded-2xl shadow-xl"
+                className="w-full max-w-md mx-auto p-8 bg-monokai-bg rounded-2xl shadow-xl "
               >
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-2xl font-bold bg-gradient-to-r from-monokai-fg to-monokai-purple bg-clip-text text-transparent">

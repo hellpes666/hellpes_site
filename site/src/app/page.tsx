@@ -1,4 +1,5 @@
-import { memo } from "react";
+"use client"
+import { memo, useEffect, useState } from "react";
 import Image from "next/image";
 import { NAVIGATION_ITEMS, SOCIAL_LINKS } from "@/shared/constants/routes";
 import { OTHER_STACK, TECH_STACK } from "@/shared/constants/stack";
@@ -8,12 +9,47 @@ import RunningLine from "@/widgets/RunningLine/RunningLine";
 import { HeroCard } from "@/widgets/HeroCard/HeroCard";
 import { ProjectsShowcase } from "@/widgets/ProjectsShowCase/ProjectsShowcase";
 import QuoteSection from "@/widgets/QuoteSection/QuoteSection";
+import { motion } from "framer-motion";
 
 const COMMON_STYLES = {
   card: "rounded-2xl bg-slate-800 p-4 w-fit animate-fade-in",
   socialLink:
     "bg-slate-800 rounded-full w-10 h-10 hover:bg-slate-700 hover:scale-110 transition-all duration-300 flex items-center justify-center",
-  navLink: "text-[#A5C5E9] transition-all duration-300 hover:scale-110",
+  navLink: `
+    relative 
+    text-[#A5C5E9] 
+    transition-all 
+    duration-300 
+    py-2
+    hover:text-white
+    before:content-['']
+    before:absolute
+    before:bottom-0
+    before:left-0
+    before:w-0
+    before:h-[2px]
+    before:bg-gradient-to-r
+    before:from-monokai-purple
+    before:to-monokai-fg
+    before:transition-all
+    before:duration-300
+    hover:before:w-full
+    after:content-['']
+    after:absolute
+    after:top-0
+    after:right-0
+    after:w-0
+    after:h-[2px]
+    after:bg-gradient-to-l
+    after:from-monokai-purple
+    after:to-monokai-fg
+    after:transition-all
+    after:duration-300
+    hover:after:w-full
+    hover:translate-y-[-2px]
+    hover:shadow-lg
+    hover:shadow-monokai-purple/20
+  `,
 };
 
 const ContactForm = memo(() => (
@@ -28,13 +64,20 @@ ContactForm.displayName = "ContactForm";
 const NavigationLinks = memo(() => (
   <div className="flex items-center gap-6">
     {NAVIGATION_ITEMS.map(item => (
-      <a
+      <motion.a
         key={item}
         href={`#${item.toLowerCase()}`}
         className={COMMON_STYLES.navLink}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        transition={{
+          type: "spring",
+          stiffness: 400,
+          damping: 17
+        }}
       >
         {item}
-      </a>
+      </motion.a>
     ))}
   </div>
 ));
@@ -260,29 +303,73 @@ const Footer = memo(() => (
           © {new Date().getFullYear()} Alex. All rights reserved.
         </p>
       </div>
-      ``{" "}
+      {" "}
     </div>
   </footer>
 ));
 Footer.displayName = "Footer";
 
+const LoadingScreen = memo(() => (
+  <div className="fixed inset-0 bg-black z-[100] flex items-center justify-center transition-opacity duration-1000"
+    id="loading-screen">
+    <h1 className="text-4xl md:text-6xl font-bold text-transparent animate-pulse
+      [text-shadow:0_0_10px_#fff,0_0_20px_#fff,0_0_30px_#fff] select-none text-center">
+      a developer <br /> who is alone <br /> is the best developer
+    </h1>
+  </div>
+));
+LoadingScreen.displayName = "LoadingScreen";
+
+
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Блокируем скролл при загрузке
+    document.body.style.overflow = 'hidden';
+
+    const timer = setTimeout(() => {
+      const loadingScreen = document.getElementById('loading-screen');
+      if (loadingScreen) {
+        loadingScreen.style.opacity = '0';
+      }
+
+      setTimeout(() => {
+        setIsLoading(false);
+        // Разблокируем скролл после загрузки
+        document.body.style.overflow = 'unset';
+      }, 1000);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen relative before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle,_#ffffff33_1px,_transparent_1px)] before:bg-[length:24px_24px]">
-      <div className="mx-24">
-        <Header />
-        <main className="mt-16 min-h-[calc(100vh-8rem)] flex flex-col justify-between items-stretch">
-          <HeroSection />
-          <QuoteSection />
-          <TechStack />
-          <ProjectsShowcase />
-          <div className="flex gap-8 px-4 md:px-0 mt-24">
-            <CodeBlock />
-            <AboutSection />
-          </div>
-        </main>
+    <>
+      {isLoading && <LoadingScreen />}
+      <div className="min-h-screen relative">
+        <div className={`absolute inset-0 -z-10 
+          bg-[radial-gradient(circle,_#ffffff33_1px,_transparent_1px)] 
+          bg-[length:24px_24px] ${isLoading ? "overflow-hidden" : ""}`} />
+
+        <div className="container mx-auto px-6">
+          <Header />
+          <main className="mt-16 min-h-[calc(100vh-8rem)] flex flex-col justify-between items-stretch">
+            <HeroSection />
+            <QuoteSection />
+            <TechStack />
+            <ProjectsShowcase />
+            <div className="flex gap-8 mt-24">
+              <CodeBlock />
+              <AboutSection />
+            </div>
+          </main>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 }
