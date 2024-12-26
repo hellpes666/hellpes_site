@@ -212,3 +212,13 @@ html > * {
 .animate-fade-in {
   animation: fadeIn 0.8s ease-out forwards;
 }
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

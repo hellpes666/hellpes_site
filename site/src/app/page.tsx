@@ -7,6 +7,7 @@ import AboutSection from "@/widgets/AboutSection/AboutSection";
 import RunningLine from "@/widgets/RunningLine/RunningLine";
 import { HeroCard } from "@/widgets/HeroCard/HeroCard";
 import { ProjectsShowcase } from "@/widgets/ProjectsShowCase/ProjectsShowcase";
+import QuoteSection from "@/widgets/QuoteSection/QuoteSection";
 
 const COMMON_STYLES = {
   card: "rounded-2xl bg-slate-800 p-4 w-fit animate-fade-in",
@@ -71,7 +72,7 @@ const Header = memo(() => (
 Header.displayName = "Header";
 
 const HeroSection = memo(() => (
-  <div className="flex flex-col md:flex-row justify-between items-stretch gap-8 px-4 md:px-0">
+  <div className="flex flex-col md:flex-row justify-between items-stretch gap-8 px-4 md:px-0 my-24">
     <HeroCard
       text="What's up?"
       delay={0.2}
@@ -272,6 +273,7 @@ export default function Home() {
         <Header />
         <main className="mt-16 min-h-[calc(100vh-8rem)] flex flex-col justify-between items-stretch">
           <HeroSection />
+          <QuoteSection />
           <TechStack />
           <ProjectsShowcase />
           <div className="flex gap-8 px-4 md:px-0 mt-24">
