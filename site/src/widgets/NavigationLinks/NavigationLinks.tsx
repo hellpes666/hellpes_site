@@ -6,7 +6,7 @@ import { useActiveSection } from "../Header/useActiveSection";
 
 export const NavigationLinks = memo(() => {
     const activeSection = useActiveSection();
-    console.log('Active section:', activeSection); // для отладки
+    console.log('Active section:', activeSection); 
 
 
     return (

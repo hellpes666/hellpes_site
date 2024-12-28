@@ -17,6 +17,8 @@ export const ChatButton = () => {
                    hover:shadow-xl transition-shadow duration-300 text-white"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
+                role="button"
+                aria-label="Open chat"
             >
                 {isOpen ? (
                     <IoClose className="w-6 h-6" />

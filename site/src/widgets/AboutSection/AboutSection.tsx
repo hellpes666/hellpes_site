@@ -148,7 +148,9 @@ const AboutSection = () => {
         <div className="mt-auto">
           <button
             onClick={() => setIsOpen(true)}
-            className="px-6 py-3 bg-monokai-purple text-monokai-fg rounded-xl font-semibold hover:bg-monokai-pink transition-colors duration-300"
+            className="px-6 py-3 bg-[#ae7cff] text-white rounded-xl font-semibold 
+            hover:bg-[#610fe4] hover:shadow-lg hover:shadow-[#610fe4]/50 
+            transition-all duration-300 hover:scale-105"
           >
             Contact Me
           </button>
