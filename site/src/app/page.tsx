@@ -63,7 +63,7 @@ export default function Home() {
             <QuoteSection />
             <TechStack />
             <ProjectsShowcase />
-            <div className="flex gap-8 mt-24">
+            <div className="flex gap-8 mt-24 flex-col md:flex-row md:w-full">
               <CodeBlock />
               <AboutSection />
             </div>

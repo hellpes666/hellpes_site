@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { SocialLinks } from "../SocialLinks/SocialLinks";
 import { NavigationLinks } from "../NavigationLinks/NavigationLinks";
+import { BurgerMenu } from "./BurgerMenu";
 
 export const Header = memo(() => (
     <header className="border border-solid border-slate-800 rounded-b-2xl px-1 pb-1 animate-border sticky top-0 z-50">
@@ -8,8 +9,13 @@ export const Header = memo(() => (
             <strong className="animate-shimmer bg-gradient-to-r from-white via-[#A5C5E9] to-white bg-clip-text text-transparent bg-[length:200%_100%] font-bold select-none">
                 developer.
             </strong>
-            <NavigationLinks />
-            <SocialLinks />
+            <div className="hidden md:block">
+                <NavigationLinks />
+            </div>
+            <div className="hidden md:block">
+                <SocialLinks />
+            </div>
+            <BurgerMenu />
         </nav>
     </header>
 ));

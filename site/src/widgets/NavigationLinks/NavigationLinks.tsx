@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { memo } from "react";
 
 export const NavigationLinks = memo(() => (
-    <div className="flex items-center gap-6">
+    <div className="flex md:flex-row flex-col items-center gap-6">
         {NAVIGATION_ITEMS.map(item => (
             <motion.a
                 key={item}

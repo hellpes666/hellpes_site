@@ -134,7 +134,7 @@ const CodeBlock = () => {
   ];
 
   return (
-    <div className="w-2/3 bg-monokai-bg/50 backdrop-blur-sm rounded-2xl p-8">
+    <div className="w-full bg-monokai-bg/50 backdrop-blur-sm rounded-2xl p-8 md:w-2/3">
       <pre className="text-sm md:text-base font-mono overflow-x-auto">
         <code className="language-typescript whitespace-pre-wrap flex flex-col">
           {codeLines.map((line, index) => (
