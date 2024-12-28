@@ -6,9 +6,19 @@ export const COMMON_STYLES = {
     relative 
     text-[#A5C5E9] 
     transition-all 
-    duration-300 
+    duration-300  
     py-2
+    px-4
     hover:text-white
+    data-[active=true]:text-white
+    data-[active=true]:bg-gradient-to-r
+    data-[active=true]:from-monokai-purple/10
+    data-[active=true]:to-monokai-fg/10
+    data-[active=true]:rounded-lg
+    data-[active=true]:shadow-[0_0_15px_rgba(174,124,255,0.15)]
+    data-[active=true]:border-l-2
+    data-[active=true]:border-r-2
+    data-[active=true]:border-monokai-purple
     before:content-['']
     before:absolute
     before:bottom-0

@@ -2,9 +2,10 @@ import { GITHUB_ICON, TELEGRAM_ICON, VK_ICON } from "../../../public";
 
 export const NAVIGATION_ITEMS = [
   "Home",
-  "About",
+  "Quote",
+  "Stack",
   "Projects",
-  "Contact",
+  "About",
 ] as const;
 
 export const SOCIAL_LINKS = [

@@ -59,14 +59,26 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <Header />
           <main className="mt-16 min-h-[calc(100vh-8rem)] flex flex-col justify-between items-stretch">
-            <HeroSection />
-            <QuoteSection />
-            <TechStack />
-            <ProjectsShowcase />
-            <div className="flex gap-8 mt-24 flex-col md:flex-row md:w-full">
+            <section id="home">
+              <HeroSection />
+            </section>
+
+            <section id="quote">
+              <QuoteSection />
+            </section>
+
+            <section id="stack">
+              <TechStack />
+            </section>
+
+            <section id="projects">
+              <ProjectsShowcase />
+            </section>
+
+            <section id="about" className="flex gap-8 mt-24 flex-col md:flex-row md:w-full">
               <CodeBlock />
               <AboutSection />
-            </div>
+            </section>
           </main>
         </div>
         <Footer />
